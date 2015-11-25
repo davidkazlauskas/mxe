@@ -64,13 +64,13 @@ endef
 
 define $(PKG)_BUILD
     # install mingw-w64 headers
-    $(call PREPARE_PKG_SOURCE,mingw-w64,$(1))
+    $(call PREPARE_PKG_SOURCE,glibc,$(1))
     mkdir '$(1).headers-build'
-    cd '$(1).headers-build' && '$(1)/$(mingw-w64_SUBDIR)/mingw-w64-headers/configure' \
+    cd '$(1).headers-build' && '$(1)/$(glibc_SUBDIR)/configure' \
         --host='$(TARGET)' \
         --prefix='$(PREFIX)/$(TARGET)' \
-        --enable-sdk=all \
-        --enable-idl
+        --enable-shared \
+        --enable-static
     $(MAKE) -C '$(1).headers-build' install
 
     # build standalone gcc
