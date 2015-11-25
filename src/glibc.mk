@@ -10,9 +10,3 @@ $(PKG)_FILE     := glibc-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://ftp.gnu.org/gnu/glibc/$($(PKG)_FILE)
 $(PKG)_DEPS     :=
 
-define $(PKG)_BUILD
-    cd '$(1)' && ./configure \
-        $(MXE_CONFIGURE_OPTS)
-
-    $(MAKE) -C '$(1)' -j '$(JOBS)' install $(MXE_DISABLE_DOCS)
-endef
