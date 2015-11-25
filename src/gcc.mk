@@ -63,15 +63,11 @@ define $(PKG)_POST_BUILD
 endef
 
 define $(PKG)_BUILD
-    # install mingw-w64 headers
-    $(call PREPARE_PKG_SOURCE,glibc,$(1))
-    mkdir '$(1).headers-build'
-    cd '$(1).headers-build' && '$(1)/$(glibc_SUBDIR)/configure' \
-        --host='$(TARGET)' \
-        --prefix='$(PREFIX)/$(TARGET)' \
-        --enable-shared \
-        --enable-static
-    $(MAKE) -C '$(1).headers-build' install
+    # extract linux headers
+    $(call PREPARE_PKG_SOURCE,linux-headers,$(1))
+    mkdir -p $(PREFIX)/$(TARGET)/include
+    rsync -r $(1)/$(linux-headers_SUBDIR)/include/linux \
+        $(PREFIX)/$(TARGET)/include/
 
     # build standalone gcc
     $($(PKG)_CONFIGURE)
