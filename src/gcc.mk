@@ -78,9 +78,19 @@ define $(PKG)_BUILD
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-gcc
     $(MAKE) -C '$(1).build' -j 1 install-gcc
 
-    # build mingw-w64-crt
-
     # build glibc
+    $(call PREPARE_PKG_SOURCE,glibc,$(1))
+    mkdir '$(1).headers-build'
+    unset LD_LIBRARY_PATH && cd '$(1).headers-build' && '$(1)/$(glibc_SUBDIR)/configure' \
+        --host='$(basename $(TARGET))' \
+        --prefix='$(PREFIX)/$(TARGET)' \
+		--enable-shared \
+        --enable-static
+
+    $(MAKE) -C '$(1).headers-build'
+    $(MAKE) -C '$(1).headers-build' install
+
+    # build mingw-w64-crt
 
     # build rest of gcc
     cd '$(1).build'
