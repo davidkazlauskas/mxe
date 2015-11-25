@@ -68,6 +68,10 @@ define $(PKG)_BUILD
     mkdir -p $(PREFIX)/$(TARGET)/include
     rsync -r $(1)/$(linux-headers_SUBDIR)/include/linux \
         $(PREFIX)/$(TARGET)/include/
+    rsync -r $(1)/$(linux-headers_SUBDIR)/include/asm-generic/ \
+        $(PREFIX)/$(TARGET)/include/asm
+    rsync -r $(1)/$(linux-headers_SUBDIR)/include/asm-generic \
+        $(PREFIX)/$(TARGET)/include/
 
     # build standalone gcc
     $($(PKG)_CONFIGURE)
@@ -90,8 +94,10 @@ define $(PKG)_BUILD
 
     # build rest of gcc
     cd '$(1).build'
-    $(MAKE) -C '$(1).build' -j '$(JOBS)'
-    $(MAKE) -C '$(1).build' -j 1 install
+    $(MAKE) -C '$(1).build' -j '$(JOBS)' all-target-libgcc
+    $(MAKE) -C '$(1).build' -j '$(JOBS)' all-target-libstdc++-v3
+    $(MAKE) -C '$(1).build' -j 1 install-target-libgcc
+    $(MAKE) -C '$(1).build' -j 1 install-target-libstdc++-v3
 
     # shared libgcc isn't installed to version-specific locations
     # so install correctly to avoid clobbering with multiple versions
