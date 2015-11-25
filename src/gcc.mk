@@ -62,7 +62,7 @@ define $(PKG)_POST_BUILD
     -rmdir '$(PREFIX)/lib/gcc/$(TARGET)/lib/')
 endef
 
-define $(PKG)_BUILD_mingw-w64
+define $(PKG)_BUILD
     # install mingw-w64 headers
     $(call PREPARE_PKG_SOURCE,mingw-w64,$(1))
     mkdir '$(1).headers-build'
@@ -79,20 +79,8 @@ define $(PKG)_BUILD_mingw-w64
     $(MAKE) -C '$(1).build' -j 1 install-gcc
 
     # build mingw-w64-crt
-    mkdir '$(1).crt-build'
-    cd '$(1).crt-build' && '$(1)/$(mingw-w64_SUBDIR)/mingw-w64-crt/configure' \
-        --host='$(TARGET)' \
-        --prefix='$(PREFIX)/$(TARGET)' \
-        @gcc-crt-config-opts@
-    $(MAKE) -C '$(1).crt-build' -j '$(JOBS)' || $(MAKE) -C '$(1).crt-build' -j '$(JOBS)'
-    $(MAKE) -C '$(1).crt-build' -j 1 install
 
-    # build posix threads
-    mkdir '$(1).pthread-build'
-    cd '$(1).pthread-build' && '$(1)/$(mingw-w64_SUBDIR)/mingw-w64-libraries/winpthreads/configure' \
-        $(MXE_CONFIGURE_OPTS)
-    $(MAKE) -C '$(1).pthread-build' -j '$(JOBS)' || $(MAKE) -C '$(1).pthread-build' -j '$(JOBS)'
-    $(MAKE) -C '$(1).pthread-build' -j 1 install
+    # build glibc
 
     # build rest of gcc
     cd '$(1).build'
