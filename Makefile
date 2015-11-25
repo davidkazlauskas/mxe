@@ -9,11 +9,11 @@ EXT_DIR  := $(TOP_DIR)/ext
 # See doc/gmsl.html for further information
 include $(EXT_DIR)/gmsl
 
-MXE_TRIPLETS       := i686-w64-mingw32 x86_64-w64-mingw32
+MXE_TRIPLETS       := i686-w64-mingw32 x86_64-w64-mingw32 x86_64-pc-linux-gnu
 MXE_LIB_TYPES      := static shared
 MXE_TARGET_LIST    := $(foreach TRIPLET,$(MXE_TRIPLETS),\
                           $(addprefix $(TRIPLET).,$(MXE_LIB_TYPES)))
-MXE_TARGETS        := i686-w64-mingw32.static
+MXE_TARGETS        := x86_64-pc-linux-gnu.static
 
 DEFAULT_MAX_JOBS   := 6
 SOURCEFORGE_MIRROR := downloads.sourceforge.net
