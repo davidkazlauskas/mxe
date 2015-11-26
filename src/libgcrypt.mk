@@ -21,6 +21,7 @@ endef
 define $(PKG)_CONFIGURE
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
+		--disable-asm \
         --with-gpg-error-prefix='$(PREFIX)/$(TARGET)'
 endef
 
@@ -30,7 +31,7 @@ define $(PKG)_MAKE
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
-        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-libgcrypt.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-libgcrypt' \
         `$(TARGET)-libgcrypt-config --cflags --libs`
 endef
 
