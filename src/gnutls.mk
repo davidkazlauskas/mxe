@@ -31,13 +31,12 @@ define $(PKG)_BUILD
         --with-libregex-libs="-lgnurx" \
         --without-p11-kit \
         --disable-silent-rules \
-        CPPFLAGS='-DWINVER=0x0501 -DAI_ADDRCONFIG=0x0400 -DIPV6_V6ONLY=27' \
-        LIBS='-lws2_32' \
+        CPPFLAGS='-DAI_ADDRCONFIG=0x0400 -DIPV6_V6ONLY=27' \
         ac_cv_prog_AR='$(TARGET)-ar'
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
-        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-gnutls.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-gnutls' \
         `'$(TARGET)-pkg-config' gnutls --cflags --libs`
 endef
