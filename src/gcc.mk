@@ -88,7 +88,7 @@ define $(PKG)_BUILD
         --enable-static
 
     $(MAKE) -C '$(1).headers-build'
-    $(MAKE) -C '$(1).headers-build' install
+    unset LD_LIBRARY_PATH && $(MAKE) -C '$(1).headers-build' install
 
     # build mingw-w64-crt
 
