@@ -38,14 +38,9 @@ define $(PKG)_NATIVE_BUILD
     # native build for glib-genmarshal, without gettext
     cd '$(1).native' && ./configure \
         --disable-shared \
+        --enable-static \
         --prefix='$(PREFIX)/$(TARGET)' \
         --enable-regex \
-        --disable-threads \
-        --disable-selinux \
-        --disable-inotify \
-        --disable-fam \
-        --disable-xattr \
-        --disable-dtrace \
         --with-libiconv=gnu \
         --with-pcre=internal \
         CPPFLAGS='-I$(1).native/$(libiconv_SUBDIR)/include -I$(1).native/$(zlib_SUBDIR)' \
@@ -86,11 +81,13 @@ define $(PKG)_BUILD
 
     # cross build
     cd '$(1)' && ./configure \
+        ac_cv_func_posix_getgrgid_r=yes \
+        ac_cv_func_posix_getpwuid_r=yes \
+        glib_cv_uscore=no \
+        glib_cv_stack_grows=no \
         $(MXE_CONFIGURE_OPTS) \
-        --with-threads=win32 \
         --with-pcre=system \
         --with-libiconv=gnu \
-        --disable-inotify \
         CXX='$(TARGET)-g++' \
         PKG_CONFIG='$(PREFIX)/bin/$(TARGET)-pkg-config' \
         GLIB_GENMARSHAL='$(PREFIX)/$(TARGET)/bin/glib-genmarshal' \
