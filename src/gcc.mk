@@ -73,6 +73,14 @@ define $(PKG)_BUILD
     rsync -r $(1)/$(linux-headers_SUBDIR)/include/asm-generic \
         $(PREFIX)/$(TARGET)/include/
 
+    # build glibc headers
+    $(call PREPARE_PKG_SOURCE,glibc,$(1))
+    mkdir '$(1).headers-build'
+    unset LD_LIBRARY_PATH && cd '$(1).headers-build' && '$(1)/$(glibc_SUBDIR)/configure' \
+        --host='$(basename $(TARGET))' \
+        --prefix='$(PREFIX)/$(TARGET)'
+    $(MAKE) -C '$(1).headers-build' install-headers
+
     # build standalone gcc
     $($(PKG)_CONFIGURE)
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-gcc
