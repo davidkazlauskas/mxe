@@ -30,7 +30,6 @@ define $(PKG)_CONFIGURE
         --libdir='$(PREFIX)/lib' \
         --enable-languages='c,c++,objc,fortran' \
         --enable-version-specific-runtime-libs \
-        --with-sysroot='$(PREFIX)/$(TARGET)' \
         --with-gcc \
         --with-gnu-ld \
         --with-gnu-as \
@@ -82,8 +81,8 @@ define $(PKG)_BUILD
         --prefix='$(PREFIX)/$(TARGET)'
     $(MAKE) -C '$(1).headers-build' install-headers
 
-    # additional usr shortcut
-    cd '$(PREFIX)/$(TARGET)' && rm -f usr && ln -s . usr
+    # add sys-include
+    cd '$(PREFIX)/$(TARGET)' && rm -f sys-include && ln -s include sys-include
 
     # build standalone gcc
     $($(PKG)_CONFIGURE)

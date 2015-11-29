@@ -25,7 +25,6 @@ define $(PKG)_BUILD
         --prefix='$(PREFIX)' \
         --disable-multilib \
         --with-gcc \
-        --with-sysroot='$(PREFIX)/$(TARGET)' \
         --with-gnu-ld \
         --with-gnu-as \
         --disable-nls \
