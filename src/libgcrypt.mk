@@ -21,7 +21,7 @@ endef
 define $(PKG)_CONFIGURE
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
-		--disable-asm \
+        --disable-asm \
         --with-gpg-error-prefix='$(PREFIX)/$(TARGET)'
 endef
 
