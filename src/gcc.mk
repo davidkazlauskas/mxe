@@ -30,6 +30,8 @@ define $(PKG)_CONFIGURE
         --libdir='$(PREFIX)/lib' \
         --enable-languages='c,c++,objc,fortran' \
         --enable-version-specific-runtime-libs \
+        --with-sysroot='$(PREFIX)/$(TARGET)' \
+        --with-native-system-header-dir='/include' \
         --with-gcc \
         --with-gnu-ld \
         --with-gnu-as \
