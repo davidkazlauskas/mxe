@@ -83,7 +83,7 @@ define $(PKG)_BUILD
     $(MAKE) -C '$(1).headers-build' install-headers
 
     # additional usr shortcut
-    cd '$(PREFIX)/$(TARGET)' && ln -sf . usr
+    cd '$(PREFIX)/$(TARGET)' && rm -f usr && ln -s . usr
 
     # build standalone gcc
     $($(PKG)_CONFIGURE)
