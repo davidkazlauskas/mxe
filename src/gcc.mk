@@ -80,15 +80,15 @@ define $(PKG)_BUILD
 
     # build glibc
     $(call PREPARE_PKG_SOURCE,glibc,$(1))
-    mkdir '$(1).headers-build'
-    unset LD_LIBRARY_PATH && cd '$(1).headers-build' && '$(1)/$(glibc_SUBDIR)/configure' \
+    mkdir '$(1).corelibs-build'
+    unset LD_LIBRARY_PATH && cd '$(1).corelibs-build' && '$(1)/$(glibc_SUBDIR)/configure' \
         --host='$(basename $(TARGET))' \
         --prefix='$(PREFIX)/$(TARGET)' \
 		--enable-shared \
         --enable-static
 
-    $(MAKE) -C '$(1).headers-build'
-    unset LD_LIBRARY_PATH && $(MAKE) -C '$(1).headers-build' install
+    $(MAKE) -C '$(1).corelibs-build'
+    unset LD_LIBRARY_PATH && $(MAKE) -C '$(1).corelibs-build' install
 
     # build mingw-w64-crt
 
