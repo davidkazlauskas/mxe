@@ -31,7 +31,6 @@ define $(PKG)_CONFIGURE
         --enable-languages='c,c++,objc,fortran' \
         --enable-version-specific-runtime-libs \
         --with-sysroot='$(PREFIX)/$(TARGET)' \
-        --with-native-system-header-dir='/include' \
         --with-gcc \
         --with-gnu-ld \
         --with-gnu-as \
@@ -82,6 +81,9 @@ define $(PKG)_BUILD
         --host='$(basename $(TARGET))' \
         --prefix='$(PREFIX)/$(TARGET)'
     $(MAKE) -C '$(1).headers-build' install-headers
+
+    # additional usr shortcut
+    cd '$(PREFIX)/$(TARGET)' && ln -s . usr
 
     # build standalone gcc
     $($(PKG)_CONFIGURE)
