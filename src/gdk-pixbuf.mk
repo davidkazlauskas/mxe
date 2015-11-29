@@ -24,7 +24,7 @@ define $(PKG)_BUILD
         $(MXE_CONFIGURE_OPTS) \
         --disable-modules \
         --with-included-loaders \
-        --without-gdiplus \
+        --enable-gio-sniffing=yes \
         LIBS="`'$(TARGET)-pkg-config' --libs libtiff-4`"
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef
