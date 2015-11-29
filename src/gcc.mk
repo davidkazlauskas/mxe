@@ -95,7 +95,7 @@ define $(PKG)_BUILD
     unset LD_LIBRARY_PATH && cd '$(1).corelibs-build' && '$(1)/$(glibc_SUBDIR)/configure' \
         --host='$(basename $(TARGET))' \
         --prefix='$(PREFIX)/$(TARGET)' \
-		--enable-shared \
+        --enable-shared \
         --enable-static
 
     $(MAKE) -C '$(1).corelibs-build'
