@@ -25,7 +25,6 @@ define $(PKG)_BUILD
         --disable-gtk-doc \
         --disable-test-surfaces \
         --disable-gcov \
-        --disable-xlib \
         --disable-xlib-xrender \
         --disable-xcb \
         --disable-quartz \
@@ -40,6 +39,7 @@ define $(PKG)_BUILD
         --enable-ps \
         --enable-pdf \
         --enable-svg \
+        --enable-xlib \
         LIBS="-lpixman-1"
     $(MAKE) -C '$(1)' -j '$(JOBS)' all
 	$(MAKE) -C '$(1)' -j '$(JOBS)' install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
