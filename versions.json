@@ -386,6 +386,7 @@
     "xerces": "3.1.2",
     "xextproto": "7.2.1",
     "xine-lib": "1.2.6",
+    "xkbproto": "1.0.6",
     "xlib": "1.5.0",
     "xmlrpc-c": "d4364f4",
     "xmlwrapp": "0.7.0",

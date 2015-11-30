@@ -1,14 +1,14 @@
 # This file is part of MXE.
 # See index.html for further information.
 
-PKG             := xlib
+PKG             := xkbproto
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 1.5.0
-$(PKG)_CHECKSUM := c382efd7e92bfc3cef39a4b7f1ecf2744ba4414a705e3bc1e697f75502bd4d86
-$(PKG)_SUBDIR   := libX11-$($(PKG)_VERSION)
-$(PKG)_FILE     := libX11-$($(PKG)_VERSION).tar.bz2
-$(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/lib/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xproto xcblib xextproto xtrans xkbproto
+$(PKG)_VERSION  := 1.0.6
+$(PKG)_CHECKSUM := 037cac0aeb80c4fccf44bf736d791fccb2ff7fd34c558ef8f03ac60b61085479
+$(PKG)_SUBDIR   := kbproto-$($(PKG)_VERSION)
+$(PKG)_FILE     := kbproto-$($(PKG)_VERSION).tar.bz2
+$(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
+$(PKG)_DEPS     := gcc
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
