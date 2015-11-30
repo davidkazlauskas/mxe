@@ -1,14 +1,14 @@
 # This file is part of MXE.
 # See index.html for further information.
 
-PKG             := xcblib
+PKG             := pthread-stubs
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 1.8.1
-$(PKG)_CHECKSUM := d2f46811e950710e7e79e45615d24f2c7ec318b9de9dc717972723da58bffa0d
-$(PKG)_SUBDIR   := libxcb-$($(PKG)_VERSION)
-$(PKG)_FILE     := libxcb-$($(PKG)_VERSION).tar.bz2
+$(PKG)_VERSION  := 0.3
+$(PKG)_CHECKSUM := 35b6d54e3cc6f3ba28061da81af64b9a92b7b757319098172488a660e3d87299
+$(PKG)_SUBDIR   := libpthread-stubs-$($(PKG)_VERSION)
+$(PKG)_FILE     := libpthread-stubs-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/xcb/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xcbproto pthread-stubs
+$(PKG)_DEPS     := gcc
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \

@@ -283,6 +283,7 @@
     "proj": "4.8.0",
     "protobuf": "2.5.0",
     "pthreads": "POSIX 1003.1-2001",
+    "pthread-stubs": "0.3",
     "qdbm": "1.8.78",
     "qhttpengine": "0.1.0",
     "qjson": "0.8.1",
