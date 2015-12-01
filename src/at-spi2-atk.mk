@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := 78efc45ec36383bf785f8636e64a8d866defeb020e00a08f92978f1fc3772
 $(PKG)_SUBDIR   := at-spi2-atk-$($(PKG)_VERSION)
 $(PKG)_FILE     := at-spi2-atk-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://ftp.gnome.org/pub/gnome/sources/at-spi2-atk/$(call SHORT_PKG_VERSION,$(PKG))/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc atk
+$(PKG)_DEPS     := gcc atk at-spi2-core
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://git.gnome.org/browse/atk/refs/tags' | \
@@ -21,6 +21,6 @@ endef
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS)
-    $(MAKE) -C '$(1)' -j '$(JOBS)' $(MXE_DISABLE_CRUFT) SUBDIRS='atk po' SHELL=bash
-    $(MAKE) -C '$(1)' -j 1 install $(MXE_DISABLE_CRUFT) SUBDIRS='atk po'
+    $(MAKE) -C '$(1)' -j '$(JOBS)' SUBDIRS='atk po' SHELL=bash
+    $(MAKE) -C '$(1)' -j 1 install SUBDIRS='atk po'
 endef
