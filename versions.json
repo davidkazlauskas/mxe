@@ -402,6 +402,7 @@
     "xproto": "7.0.23",
     "xrandr": "1.3.2",
     "xrandrproto": "1.3.2",
+    "xrecordproto": "1.14.2",
     "xrender": "0.9.7",
     "xrenderproto": "0.11.1",
     "xtrans": "1.2.7",
