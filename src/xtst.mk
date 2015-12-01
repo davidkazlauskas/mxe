@@ -18,6 +18,7 @@ endef
 
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
-        $(MXE_CONFIGURE_OPTS)
+        $(MXE_CONFIGURE_OPTS) \
+		XTST_LIBS="-lX11 -lxcb"
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef
