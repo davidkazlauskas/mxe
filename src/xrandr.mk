@@ -1,14 +1,14 @@
 # This file is part of MXE.
 # See index.html for further information.
 
-PKG             := xinput
+PKG             := xrandr
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 1.6.0
-$(PKG)_CHECKSUM := 4ab007d952c76665603bcb82ceb15fd3929d10faf0580fc4873ac16f5f63847e
-$(PKG)_SUBDIR   := xinput-$($(PKG)_VERSION)
-$(PKG)_FILE     := xinput-$($(PKG)_VERSION).tar.bz2
+$(PKG)_VERSION  := 1.3.2
+$(PKG)_CHECKSUM := 7eaca216ab5233d7396119eb87c1989d350a3efead104d54b55f22cdd1d99b81
+$(PKG)_SUBDIR   := libXrandr-$($(PKG)_VERSION)
+$(PKG)_FILE     := libXrandr-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xi xrandr
+$(PKG)_DEPS     := gcc
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
