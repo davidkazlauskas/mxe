@@ -24,6 +24,6 @@ define $(PKG)_BUILD
 		--x-includes='$(PREFIX)/$(TARGET)/include' \
 		--x-libraries='$(PREFIX)/$(TARGET)/lib' \
 		X_EXTRA_LIBS="-lXext -lxcb -lXau"
-    $(MAKE) -C '$(1)' -j '$(JOBS)' $(MXE_DISABLE_CRUFT) SUBDIRS='atk po' SHELL=bash
-    $(MAKE) -C '$(1)' -j 1 install $(MXE_DISABLE_CRUFT) SUBDIRS='atk po'
+    SHELL="/bin/bash -vx" $(MAKE) -C '$(1)' -j '$(JOBS)'
+    $(MAKE) -C '$(1)' -j 1 install
 endef
