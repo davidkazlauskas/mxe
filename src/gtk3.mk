@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := a006c716d723dab0c623491566e3292af84c87d9198a30199051d23cfc7be
 $(PKG)_SUBDIR   := gtk+-$($(PKG)_VERSION)
 $(PKG)_FILE     := gtk+-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://ftp.gnome.org/pub/gnome/sources/gtk+/$(call SHORT_PKG_VERSION,$(PKG))/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc atk cairo gdk-pixbuf gettext glib jasper jpeg libpng pango tiff
+$(PKG)_DEPS     := gcc atk cairo gdk-pixbuf gettext glib jasper jpeg libpng pango tiff at-spi2-atk
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://git.gnome.org/browse/gtk+/refs/tags' | \
@@ -29,7 +29,7 @@ define $(PKG)_BUILD
         --disable-gtk-doc \
         --disable-man \
         --with-included-immodules \
-        --without-x
+        --with-x
     $(MAKE) -C '$(1)' -j '$(JOBS)' install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
 
     '$(TARGET)-gcc' \
