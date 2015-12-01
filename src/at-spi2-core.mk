@@ -23,6 +23,7 @@ define $(PKG)_BUILD
         $(MXE_CONFIGURE_OPTS) \
 		--x-includes='$(PREFIX)/$(TARGET)/include' \
 		--x-libraries='$(PREFIX)/$(TARGET)/lib' \
+		XTST_LIBS="-lXtst -lXext" \
 		X_EXTRA_LIBS="-lXext -lxcb -lXau"
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install

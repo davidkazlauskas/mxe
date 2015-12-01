@@ -1,0 +1,11 @@
+--- a/configure
++++ b/configure
+@@ -13693,7 +13693,7 @@
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_Xtst_XTestFakeKeyEvent" >&5
+ $as_echo "$ac_cv_lib_Xtst_XTestFakeKeyEvent" >&6; }
+ if test "x$ac_cv_lib_Xtst_XTestFakeKeyEvent" = xyes; then :
+-  XTST_LIBS=-lXtst
++  XTST_LIBS=-lXtst -lXext
+ else
+ 
+ 	as_fn_error $? "Couldn't find the Xtst library. Check config.log" "$LINENO" 5
