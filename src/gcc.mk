@@ -66,12 +66,7 @@ define $(PKG)_BUILD
     # extract linux headers
     $(call PREPARE_PKG_SOURCE,linux-headers,$(1))
     mkdir -p $(PREFIX)/$(TARGET)/include
-    rsync -r $(1)/$(linux-headers_SUBDIR)/include/linux \
-        $(PREFIX)/$(TARGET)/include/
-    rsync -r $(1)/$(linux-headers_SUBDIR)/include/asm-generic/ \
-        $(PREFIX)/$(TARGET)/include/asm
-    rsync -r $(1)/$(linux-headers_SUBDIR)/include/asm-generic \
-        $(PREFIX)/$(TARGET)/include/
+    make -C "$(1)/$(linux-headers_SUBDIR)" headers_install ARCH=x86_64 INSTALL_HDR_PATH="$(PREFIX)/$(TARGET)"
 
     # build glibc headers
     $(call PREPARE_PKG_SOURCE,glibc,$(1))
