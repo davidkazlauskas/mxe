@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := 1c0b77fb8ce81abbf1d80c0afee9858b3f9229f673b7881995fe0fc16b1a7
 $(PKG)_SUBDIR   := at-spi2-core-$($(PKG)_VERSION)
 $(PKG)_FILE     := at-spi2-core-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://ftp.gnome.org/pub/gnome/sources/at-spi2-core/$(call SHORT_PKG_VERSION,$(PKG))/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xtst
+$(PKG)_DEPS     := gcc xtst glib
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://git.gnome.org/browse/atk/refs/tags' | \
