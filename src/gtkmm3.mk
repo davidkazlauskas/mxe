@@ -31,7 +31,7 @@ define $(PKG)_BUILD
     '$(TARGET)-g++' \
         -W -Wall -Werror -pedantic -std=c++0x \
         '$(2).cpp' -o '$(PREFIX)/$(TARGET)/bin/test-gtkmm3.exe' \
-        `'$(TARGET)-pkg-config' gtkmm-3.0 --cflags --libs`
+        `'$(TARGET)-pkg-config' gtkmm-3.0 --cflags --libs` -llzma -latk-1.0
 endef
 
 $(PKG)_BUILD_SHARED =
