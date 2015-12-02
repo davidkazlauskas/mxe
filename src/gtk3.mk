@@ -29,7 +29,10 @@ define $(PKG)_BUILD
         --disable-gtk-doc \
         --disable-man \
         --with-included-immodules \
-        --with-x
+        --with-x \
+		PKG_CONFIG_FOR_BUILD="$(PREFIX)/bin/$(TARGET)-pkg-config"
+
+	$(MAKE) -C '$(1)' -j '$(JOBS)' 
     $(MAKE) -C '$(1)' -j '$(JOBS)' install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
 
     '$(TARGET)-gcc' \
