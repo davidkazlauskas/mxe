@@ -28,8 +28,9 @@ define $(PKG)_BUILD_COMMON
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
+        -DLUA_32BITS \
         '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-lua.exe' \
-        `$(TARGET)-pkg-config --libs lua`
+        `$(TARGET)-pkg-config --libs lua` -lm
 endef
 
 define $(PKG)_BUILD
