@@ -1,0 +1,11 @@
+--- a/configure
++++ b/configure
+@@ -23212,7 +23212,7 @@
+ fi
+ 
+        NATIVE_GDKPIXBUF_CFLAGS=`$PKG_CONFIG_FOR_BUILD --cflags gdk-pixbuf-2.0`
+-       NATIVE_GDKPIXBUF_LIBS=`$PKG_CONFIG_FOR_BUILD --libs gdk-pixbuf-2.0`
++       NATIVE_GDKPIXBUF_LIBS="`$PKG_CONFIG_FOR_BUILD --libs gdk-pixbuf-2.0 gio-2.0` -llzma"
+        # This is the native gtk-update-icon-cache which will be used at
+        # build time, NOT the one installed on the target host.
+        GTK_UPDATE_ICON_CACHE="`cd $builddir && pwd`/gtk/native/native-update-icon-cache$BUILD_EXEEXT"
