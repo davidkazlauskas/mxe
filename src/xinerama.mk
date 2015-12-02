@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := a4e77c2fd88372e4ae365f3ca0434a23613da96c5b359b1a64bf43614ec06
 $(PKG)_SUBDIR   := libXinerama-$($(PKG)_VERSION)
 $(PKG)_FILE     := libXinerama-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc
+$(PKG)_DEPS     := gcc xlib xineramaproto
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \

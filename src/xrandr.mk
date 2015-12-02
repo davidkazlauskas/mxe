@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := 7eaca216ab5233d7396119eb87c1989d350a3efead104d54b55f22cdd1d99
 $(PKG)_SUBDIR   := libXrandr-$($(PKG)_VERSION)
 $(PKG)_FILE     := libXrandr-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xrandrproto
+$(PKG)_DEPS     := gcc xext xrender xrandrproto
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
