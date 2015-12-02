@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := 56229c617eb7bfd6dec40d2805bc4dfb883dfe80f130d99b9a2beb632165e
 $(PKG)_SUBDIR   := libXext-$($(PKG)_VERSION)
 $(PKG)_FILE     := libXext-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc
+$(PKG)_DEPS     := gcc xlib
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \

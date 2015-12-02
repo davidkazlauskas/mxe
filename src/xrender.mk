@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := f9b46b93c9bc15d5745d193835ac9ba2a2b411878fad60c504bbb8f98492b
 $(PKG)_SUBDIR   := libXrender-$($(PKG)_VERSION)
 $(PKG)_FILE     := libXrender-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xorg-macros xrenderproto
+$(PKG)_DEPS     := gcc xorg-macros xrenderproto xlib
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
