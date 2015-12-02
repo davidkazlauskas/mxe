@@ -37,11 +37,9 @@ define $(PKG)_BUILD
         --ignore-site-config \
         --user-config=user-config.jam \
         address-model=$(BITS) \
-        architecture=x86 \
-        binary-format=pe \
         link=$(if $(BUILD_STATIC),static,shared) \
-        target-os=windows \
-        threadapi=win32 \
+        target-os=linux \
+        threadapi=pthread \
         threading=multi \
         variant=release \
         toolset=gcc-mxe \
@@ -68,13 +66,15 @@ define $(PKG)_BUILD
         '$(2).cpp' -o '$(PREFIX)/$(TARGET)/bin/test-boost.exe' \
         -DBOOST_THREAD_USE_LIB \
         -lboost_serialization-mt \
-        -lboost_thread_win32-mt \
+        -lboost_thread-mt \
         -lboost_system-mt \
-        -lboost_chrono-mt
+        -lboost_chrono-mt \
+        -pthread
 
     # test cmake
     mkdir '$(1).test-cmake'
     cd '$(1).test-cmake' && '$(TARGET)-cmake' \
+        -DCMAKE_TOOLCHAIN_FILE="$(PREFIX)/$(TARGET)/share/cmake/mxe-conf.cmake" \
         -DPKG=$(PKG) \
         -DPKG_VERSION=$($(PKG)_VERSION) \
         '$(PWD)/src/cmake/test'
