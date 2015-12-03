@@ -16,7 +16,7 @@ define $(PKG)_BUILD
     # individual packages (e.g. hdf5) should add their
     # own files under CMAKE_TOOLCHAIN_DIR
     [ -d '$(CMAKE_TOOLCHAIN_DIR)' ] || mkdir -p '$(CMAKE_TOOLCHAIN_DIR)'
-    (echo 'set(CMAKE_SYSTEM_NAME Windows)'; \
+    (echo 'set(CMAKE_SYSTEM_NAME Linux)'; \
      echo 'set(MSYS 1)'; \
      echo 'set(BUILD_SHARED_LIBS $(if $(BUILD_SHARED),ON,OFF))'; \
      echo 'set(LIBTYPE $(if $(BUILD_SHARED),SHARED,STATIC))'; \
