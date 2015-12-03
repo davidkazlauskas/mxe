@@ -34,3 +34,4 @@ endef
 
 $(PKG)_BUILD_i686-w64-mingw32   = $(subst @openssl-target@,mingw,$($(PKG)_BUILD))
 $(PKG)_BUILD_x86_64-w64-mingw32 = $(subst @openssl-target@,mingw64,$($(PKG)_BUILD))
+$(PKG)_BUILD_x86_64-pc-linux-gnu = $(subst @openssl-target@,linux-x86_64,$($(PKG)_BUILD))
