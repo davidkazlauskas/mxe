@@ -116,7 +116,7 @@ define $(PKG)_BUILD
 
     if [ -f "$($(PKG)_LIBGCC_FOLDER)/libgcc.a" ]; then \
         ln -sf "$($(PKG)_LIBGCC_FOLDER)/libgcc.a" \
-            "$($(PKG)_LIBGCC_FOLDER)/libgcc_s.a" \
+            "$($(PKG)_LIBGCC_FOLDER)/libgcc_s.a"; \
     fi
 
     $($(PKG)_POST_BUILD)
