@@ -19,7 +19,7 @@ endef
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
-        CFLAGS="$(CFLAGS) -fPIC" \
-        CXXFLAGS="$(CXXFLAGS) -fPIC"
+        --disable-static \
+        --enable-shared
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef
