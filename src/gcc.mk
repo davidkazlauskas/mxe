@@ -12,6 +12,7 @@ $(PKG)_URL_2    := ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/rele
 $(PKG)_DEPS     := binutils glibc linux-headers
 
 $(PKG)_FILE_$(BUILD) :=
+$(PKG)_LIBGCC_FOLDER := $(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://ftp.gnu.org/gnu/gcc/?C=M;O=D' | \
@@ -112,6 +113,16 @@ define $(PKG)_BUILD
         toolexecdir='$(PREFIX)/$(TARGET)/bin/gcc-$($(PKG)_VERSION)' \
         SHLIB_SLIBDIR_QUAL= \
         install-shared)
+
+    if [ -f "$($(PKG)_LIBGCC_FOLDER)/libgcc.a" ]; then \
+        ln -sf "$($(PKG)_LIBGCC_FOLDER)/libgcc.a" \
+            "$($(PKG)_LIBGCC_FOLDER)/libgcc_s.a" \
+    fi
+
+    if [ -f "$($(PKG)_LIBGCC_FOLDER)/libgcc.so" ]; then \
+        ln -sf "$($(PKG)_LIBGCC_FOLDER)/libgcc.so" \
+            "$($(PKG)_LIBGCC_FOLDER)/libgcc_s.so" \
+    fi
 
     $($(PKG)_POST_BUILD)
 endef
