@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := f9b46b93c9bc15d5745d193835ac9ba2a2b411878fad60c504bbb8f98492b
 $(PKG)_SUBDIR   := libXrender-$($(PKG)_VERSION)
 $(PKG)_FILE     := libXrender-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xorg-macros xrenderproto xlib
+$(PKG)_DEPS     := gcc xlib xorg-macros xrenderproto
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
@@ -18,6 +18,8 @@ endef
 
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
-        $(MXE_CONFIGURE_OPTS)
+        $(MXE_CONFIGURE_OPTS) \
+        CFLAGS="$(CFLAGS) -fPIC" \
+        CXXFLAGS="$(CXXFLAGS) -fPIC"
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef

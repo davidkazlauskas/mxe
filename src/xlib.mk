@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := c382efd7e92bfc3cef39a4b7f1ecf2744ba4414a705e3bc1e697f75502bd4
 $(PKG)_SUBDIR   := libX11-$($(PKG)_VERSION)
 $(PKG)_FILE     := libX11-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/lib/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xproto xcblib xextproto xtrans xkbproto
+$(PKG)_DEPS     := gcc xproto xcblib xextproto xtrans xkbproto xinputproto
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
@@ -18,6 +18,8 @@ endef
 
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
-        $(MXE_CONFIGURE_OPTS)
+        $(MXE_CONFIGURE_OPTS) \
+        --disable-static \
+        --enable-shared
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef

@@ -19,6 +19,8 @@ endef
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
-		LDFLAGS="-ldl"
+        LDFLAGS="-ldl" \
+        CFLAGS="$(CFLAGS) -fPIC" \
+        CXXFLAGS="$(CXXFLAGS) -fPIC"
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef

@@ -18,6 +18,8 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)' && ./configure $(MXE_CONFIGURE_OPTS)
+    cd '$(1)' && ./configure $(MXE_CONFIGURE_OPTS) \
+        CFLAGS="$(CFLAGS) -fPIC" \
+        CXXFLAGS="$(CXXFLAGS) -fPIC"
     $(MAKE) -C '$(1)' -j '$(JOBS)' install pkgconfigdir='$$(libdir)/pkgconfig'
 endef
