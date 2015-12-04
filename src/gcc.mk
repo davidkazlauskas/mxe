@@ -119,11 +119,6 @@ define $(PKG)_BUILD
             "$($(PKG)_LIBGCC_FOLDER)/libgcc_s.a" \
     fi
 
-    if [ -f "$($(PKG)_LIBGCC_FOLDER)/libgcc.so" ]; then \
-        ln -sf "$($(PKG)_LIBGCC_FOLDER)/libgcc.so" \
-            "$($(PKG)_LIBGCC_FOLDER)/libgcc_s.so" \
-    fi
-
     $($(PKG)_POST_BUILD)
 endef
 
