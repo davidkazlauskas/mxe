@@ -387,6 +387,7 @@
     "xaulib": "1.0.7",
     "xcblib": "1.8.1",
     "xcbproto": "1.7.1",
+    "xcomposite": "0.4.3",
     "xerces": "3.1.2",
     "xext": "1.3.1",
     "xextproto": "7.2.1",
