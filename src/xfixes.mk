@@ -19,7 +19,7 @@ endef
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
-		--enable-shared \
-		--disable-static
+        --enable-shared \
+        --disable-static
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef
