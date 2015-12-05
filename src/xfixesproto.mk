@@ -1,14 +1,14 @@
 # This file is part of MXE.
 # See index.html for further information.
 
-PKG             := xfixes
+PKG             := xfixesproto
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 5.0
-$(PKG)_CHECKSUM := 537a2446129242737a35db40081be4bbcc126e56c03bf5f2b142b10a79cda2e3
-$(PKG)_SUBDIR   := libXfixes-$($(PKG)_VERSION)
-$(PKG)_FILE     := libXfixes-$($(PKG)_VERSION).tar.bz2
+$(PKG)_CHECKSUM := ba2f3f31246bdd3f2a0acf8bd3b09ba99cab965c7fb2c2c92b7dc72870e424ce
+$(PKG)_SUBDIR   := fixesproto-$($(PKG)_VERSION)
+$(PKG)_FILE     := fixesproto-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xlib xfixesproto
+$(PKG)_DEPS     := gcc
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
@@ -19,7 +19,7 @@ endef
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
-		--enable-shared \
-		--disable-static
+        CFLAGS="$(CFLAGS) -fPIC" \
+        CXXFLAGS="$(CXXFLAGS) -fPIC"
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef
