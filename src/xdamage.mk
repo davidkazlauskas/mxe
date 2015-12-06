@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := bc6169c826d3cb17435ca84e1b479d65e4b51df1e48bbc3ec39a9cabf842c
 $(PKG)_SUBDIR   := libXdamage-$($(PKG)_VERSION)
 $(PKG)_FILE     := libXdamage-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xdamageproto
+$(PKG)_DEPS     := gcc xdamageproto xlib xfixes
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
