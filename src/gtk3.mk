@@ -30,8 +30,8 @@ define $(PKG)_BUILD
         --disable-man \
         --with-included-immodules \
         --with-x \
-		PKG_CONFIG_FOR_BUILD="$(PREFIX)/bin/$(TARGET)-pkg-config" \
-		builddir="$(1)"
+        PKG_CONFIG_FOR_BUILD="$(PREFIX)/bin/$(TARGET)-pkg-config" \
+        builddir="$(1)"
 
 	$(MAKE) -C '$(1)' -j '$(JOBS)' 
     $(MAKE) -C '$(1)' -j '$(JOBS)' install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
