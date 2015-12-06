@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := 32294d28f4ee46db310c344546d98484728b7d52158c6d7c25bba02563b41
 $(PKG)_SUBDIR   := libXcomposite-$($(PKG)_VERSION)
 $(PKG)_FILE     := libXcomposite-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://www.x.org/releases/X11R7.7/src/everything/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc xlib xcompositeproto
+$(PKG)_DEPS     := gcc xlib xfixes xcompositeproto
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
