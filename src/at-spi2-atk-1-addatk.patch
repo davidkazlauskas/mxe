@@ -1,0 +1,10 @@
+--- a/atk-bridge-2.0.pc.in
++++ b/atk-bridge-2.0.pc.in.MOD
+@@ -6,6 +6,6 @@
+ Name: atk-bridge-2.0
+ Description: ATK/D-Bus Bridge
+ Version: @VERSION@
+-Requires.private: gobject-2.0 atspi-2
++Requires.private: gobject-2.0 atspi-2 atk
+ Libs: -L${libdir} -latk-bridge-2.0
+ Cflags: -I${includedir}/at-spi2-atk/2.0
