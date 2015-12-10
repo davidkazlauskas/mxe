@@ -66,7 +66,7 @@ define $(PKG)_BUILD
     # extract linux headers
     $(call PREPARE_PKG_SOURCE,linux-headers,$(1))
     mkdir -p $(PREFIX)/$(TARGET)/include
-    make -C "$(1)/$(linux-headers_SUBDIR)" headers_install ARCH=x86_64 INSTALL_HDR_PATH="$(PREFIX)/$(TARGET)"
+    make -C "$(1)/$(linux-headers_SUBDIR)" headers_install ARCH=i386 INSTALL_HDR_PATH="$(PREFIX)/$(TARGET)"
 
     # build glibc headers
     $(call PREPARE_PKG_SOURCE,glibc,$(1))
@@ -91,7 +91,9 @@ define $(PKG)_BUILD
         --host='$(basename $(TARGET))' \
         --prefix='$(PREFIX)/$(TARGET)' \
         --enable-shared \
-        --enable-static
+        --enable-static \
+        CFLAGS="-Wno-error=attributes -O3" \
+        CXXFLAGS="-Wno-attributes -O3" \
 
     $(MAKE) -C '$(1).corelibs-build'
     unset LD_LIBRARY_PATH && $(MAKE) -C '$(1).corelibs-build' install
