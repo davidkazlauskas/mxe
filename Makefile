@@ -76,8 +76,7 @@ MXE_CONFIGURE_OPTS = \
         --enable-static --disable-shared , \
         --disable-static --enable-shared )
 
-MXE_GCC_THREADS = \
-    $(if $(findstring posix,$(TARGET)),posix,win32)
+MXE_GCC_THREADS = posix
 
 # Append these to the "make" and "make install" steps of autotools packages
 # in order to neither build nor install unwanted binaries, manpages,
