@@ -31,6 +31,7 @@ define $(PKG)_BUILD
         --with-included-immodules \
         --with-x \
         PKG_CONFIG_FOR_BUILD="$(PREFIX)/bin/$(TARGET)-pkg-config" \
+        CC_FOR_BUILD="$(PREFIX)/bin/$(TARGET)-gcc" \
         builddir="$(1)"
 
 	$(MAKE) -C '$(1)' -j '$(JOBS)' 
