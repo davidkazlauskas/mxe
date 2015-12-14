@@ -74,7 +74,7 @@ define $(PKG)_BUILD
     unset LD_LIBRARY_PATH && cd '$(1).headers-build' && '$(1)/$(glibc_SUBDIR)/configure' \
         --host='$(basename $(TARGET))' \
         --prefix='$(PREFIX)/$(TARGET)' \
-        CC="$(PREFIX)/bin/$(TARGET)-gcc -m32" \
+        CC="gcc -m32" \
         CFLAGS="-Wno-error=attributes -O2 -march=i686" \
         libc_cv_forced_unwind=yes
 
@@ -88,6 +88,21 @@ define $(PKG)_BUILD
     $($(PKG)_CONFIGURE)
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-gcc
     $(MAKE) -C '$(1).build' -j 1 install-gcc
+
+    # force correct 32 bit flags
+    cp "$(PREFIX)/bin/$(TARGET)-gcc" "$(PREFIX)/bin/$(TARGET)-gcc-orig"
+    cp "$(PREFIX)/bin/$(TARGET)-g++" "$(PREFIX)/bin/$(TARGET)-g++-orig"
+    ( \
+        echo '#!/bin/sh'; \
+        echo ''; \
+        echo '$(PREFIX)/bin/$(TARGET)-gcc-orig -m32 -march=i686 "$$@"'; \
+    ) > "$(PREFIX)/bin/$(TARGET)-gcc"
+    ( \
+        echo '#!/bin/sh'; \
+        echo ''; \
+        echo '$(PREFIX)/bin/$(TARGET)-g++-orig -m32 -march=i686 "$$@"'; \
+    ) > "$(PREFIX)/bin/$(TARGET)-g++"
+
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-target-libgcc
     $(MAKE) -C '$(1).build' -j 1 install-target-libgcc
 
