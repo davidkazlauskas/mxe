@@ -4,4 +4,4 @@
 PKG             := x11full
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 7.7
-$(PKG)_DEPS     := xlib xext xrender xinput xfixes xcomposite xdamage
+$(PKG)_DEPS     := xlib xext xrender xinput xfixes
