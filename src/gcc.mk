@@ -73,8 +73,13 @@ define $(PKG)_BUILD
     mkdir '$(1).headers-build'
     unset LD_LIBRARY_PATH && cd '$(1).headers-build' && '$(1)/$(glibc_SUBDIR)/configure' \
         --host='$(basename $(TARGET))' \
-        --prefix='$(PREFIX)/$(TARGET)'
+        --prefix='$(PREFIX)/$(TARGET)' \
+        CC="$(PREFIX)/bin/$(TARGET)-gcc -m32" \
+        CFLAGS="-Wno-error=attributes -O2 -march=i686" \
+        libc_cv_forced_unwind=yes
+
     $(MAKE) -C '$(1).headers-build' install-headers
+    $(MAKE) install-bootstrap-headers=yes -C '$(1).headers-build' install-headers
 
     # add sys-include
     cd '$(PREFIX)/$(TARGET)' && rm -f sys-include && ln -s include sys-include
@@ -83,22 +88,22 @@ define $(PKG)_BUILD
     $($(PKG)_CONFIGURE)
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-gcc
     $(MAKE) -C '$(1).build' -j 1 install-gcc
+    $(MAKE) -C '$(1).build' -j '$(JOBS)' all-target-libgcc
+    $(MAKE) -C '$(1).build' -j 1 install-target-libgcc
 
     # build glibc
-    $(call PREPARE_PKG_SOURCE,glibc,$(1))
     mkdir '$(1).corelibs-build'
     unset LD_LIBRARY_PATH && cd '$(1).corelibs-build' && '$(1)/$(glibc_SUBDIR)/configure' \
         --host='$(basename $(TARGET))' \
         --prefix='$(PREFIX)/$(TARGET)' \
         --enable-shared \
         --enable-static \
-        CFLAGS="-Wno-error=attributes -O3" \
-        CXXFLAGS="-Wno-attributes -O3" \
+        CC="$(PREFIX)/bin/$(TARGET)-gcc -m32" \
+        CFLAGS="-Wno-error=attributes -O2 -march=i686" \
+        libc_cv_forced_unwind=yes
 
     $(MAKE) -C '$(1).corelibs-build'
     unset LD_LIBRARY_PATH && $(MAKE) -C '$(1).corelibs-build' install
-
-    # build mingw-w64-crt
 
     # build rest of gcc
     cd '$(1).build'
