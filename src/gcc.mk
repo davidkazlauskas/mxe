@@ -36,6 +36,7 @@ define $(PKG)_CONFIGURE
         --disable-nls \
         $(if $(BUILD_STATIC),--disable-shared) \
         --disable-multilib \
+        --enable-shared="libgcc" \
         --without-x \
         --disable-win32-registry \
         --enable-threads \
@@ -113,9 +114,8 @@ define $(PKG)_BUILD
         --prefix='$(PREFIX)/$(TARGET)' \
         --enable-shared \
         --enable-static \
-        CC="$(PREFIX)/bin/$(TARGET)-gcc -m32" \
-        CFLAGS="-Wno-error=attributes -O2 -march=i686" \
-        libc_cv_forced_unwind=yes
+        CC="$(PREFIX)/bin/$(TARGET)-gcc" \
+        CFLAGS="-Wno-error=attributes -O2"
 
     $(MAKE) -C '$(1).corelibs-build'
     unset LD_LIBRARY_PATH && $(MAKE) -C '$(1).corelibs-build' install
