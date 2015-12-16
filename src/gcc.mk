@@ -22,7 +22,7 @@ endef
 
 define $(PKG)_CONFIGURE
     # configure gcc
-    mkdir '$(1).build'
+    mkdir -p '$(1).build'
     cd    '$(1).build' && '$(1)/configure' \
         --target='$(TARGET)' \
         --build='$(BUILD)' \
@@ -35,8 +35,8 @@ define $(PKG)_CONFIGURE
         --with-gnu-as \
         --disable-nls \
         $(if $(BUILD_STATIC),--disable-shared) \
+        $(if $(SHARED_LIBGCC),--enable-shared="libgcc") \
         --disable-multilib \
-        --enable-shared="libgcc" \
         --without-x \
         --disable-win32-registry \
         --enable-threads \
@@ -123,7 +123,9 @@ define $(PKG)_BUILD
     unset LD_LIBRARY_PATH && $(MAKE) -C '$(1).corelibs-build' install
 
     # build rest of gcc
-    cd '$(1).build'
+    cd '$(1).build' && $(MAKE) clean
+    $(eval SHARED_LIBGCC = "true")
+    $($(PKG)_CONFIGURE)
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-target-libgcc
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-target-libstdc++-v3
     $(MAKE) -C '$(1).build' -j 1 install-target-libgcc
@@ -137,9 +139,16 @@ define $(PKG)_BUILD
         SHLIB_SLIBDIR_QUAL= \
         install-shared)
 
-    if [ -f "$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)/libgcc.a" ]; then \
-        ln -sf "$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)/libgcc.a" \
-            "$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)/libgcc_s.a"; \
+	$(eval GCC_LIB_PATH=$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION))
+
+    if [ -f "$(GCC_LIB_PATH)/libgcc.a" ]; then \
+        ln -sf "$(GCC_LIB_PATH)/libgcc.a" \
+            "$(GCC_LIB_PATH)/libgcc_s.a"; \
+    fi
+
+    if [ -f "$(GCC_LIB_PATH)/libgcc_s.so" ]; then \
+        ln -sf "$(GCC_LIB_PATH)/libgcc_s.so" \
+            "$(GCC_LIB_PATH)/libgcc.so"; \
     fi
 
     $($(PKG)_POST_BUILD)
