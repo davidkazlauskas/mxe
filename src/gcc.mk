@@ -96,12 +96,14 @@ define $(PKG)_BUILD
     ( \
         echo '#!/bin/sh'; \
         echo ''; \
-        echo '$(PREFIX)/bin/$(TARGET)-gcc-orig -m32 -march=i686 "$$@"'; \
+        echo '$(PREFIX)/bin/$(TARGET)-gcc-orig \
+        -shared-libgcc -m32 -march=i686 "$$@"'; \
     ) > "$(PREFIX)/bin/$(TARGET)-gcc"
     ( \
         echo '#!/bin/sh'; \
         echo ''; \
-        echo '$(PREFIX)/bin/$(TARGET)-g++-orig -m32 -march=i686 "$$@"'; \
+        echo '$(PREFIX)/bin/$(TARGET)-g++-orig \
+        -shared-libgcc -m32 -march=i686 "$$@"'; \
     ) > "$(PREFIX)/bin/$(TARGET)-g++"
 
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-target-libgcc
