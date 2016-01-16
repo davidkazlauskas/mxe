@@ -12,6 +12,10 @@ define $(PKG)_BUILD
     # setting ac_cv_build bypasses the config.guess check in every package
     echo "ac_cv_build=$(BUILD)" > '$(PREFIX)/$(TARGET)/share/config.site'
 
+    $(eval mkfile_path = $(abspath $(lastword $(MAKEFILE_LIST))))
+    $(eval current_dir = $(notdir $(patsubst %/,%,$(dir $(mkfile_path)))))
+    $(eval mxe_revision = $(shell cd $(current_dir) && git rev-parse HEAD ))
+
     # create the CMake toolchain file
     # individual packages (e.g. hdf5) should add their
     # own files under CMAKE_TOOLCHAIN_DIR
@@ -34,6 +38,7 @@ define $(PKG)_BUILD
      echo 'set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug|Release|RelWithDebInfo|MinSizeRel")'; \
      echo 'set(CMAKE_CROSS_COMPILING ON) # Workaround for http://www.cmake.org/Bug/view.php?id=14075'; \
      echo 'set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff <FLAGS> <DEFINES> -o <OBJECT> <SOURCE>") # Workaround for buggy windres rules'; \
+     echo 'set(CMAKE_MXE_HASH "$(mxe_revision)")'; \
      echo ''; \
      echo 'file(GLOB mxe_cmake_files'; \
      echo '    "$(CMAKE_TOOLCHAIN_DIR)/*.cmake"'; \
