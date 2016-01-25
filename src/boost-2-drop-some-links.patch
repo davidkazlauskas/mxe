@@ -1,0 +1,63 @@
+--- a/libs/filesystem/src/operations.cpp
++++ b/libs/filesystem/src/operations.cpp
+@@ -1173,30 +1173,11 @@
+     }
+ 
+     // at this point, both handles are known to be valid
++    assert( false &&
++        "equivalent disabled on windows for using GetFileInformationByHandle" );
+ 
+-    BY_HANDLE_FILE_INFORMATION info1, info2;
+-
+-    if (error(!::GetFileInformationByHandle(h1.handle, &info1),
+-      p1, p2, ec, "boost::filesystem::equivalent"))
+-        return  false;
+-
+-    if (error(!::GetFileInformationByHandle(h2.handle, &info2),
+-      p1, p2, ec, "boost::filesystem::equivalent"))
+-        return  false;
+-
+-    // In theory, volume serial numbers are sufficient to distinguish between
+-    // devices, but in practice VSN's are sometimes duplicated, so last write
+-    // time and file size are also checked.
+-      return 
+-        info1.dwVolumeSerialNumber == info2.dwVolumeSerialNumber
+-        && info1.nFileIndexHigh == info2.nFileIndexHigh
+-        && info1.nFileIndexLow == info2.nFileIndexLow
+-        && info1.nFileSizeHigh == info2.nFileSizeHigh
+-        && info1.nFileSizeLow == info2.nFileSizeLow
+-        && info1.ftLastWriteTime.dwLowDateTime
+-          == info2.ftLastWriteTime.dwLowDateTime
+-        && info1.ftLastWriteTime.dwHighDateTime
+-          == info2.ftLastWriteTime.dwHighDateTime;
++    int* meow = nullptr;
++    *meow = 7;
+ 
+ #   endif
+   }
+@@ -1250,19 +1231,12 @@
+ 
+ #   else // Windows
+ 
+-    // Link count info is only available through GetFileInformationByHandle
+-    BY_HANDLE_FILE_INFORMATION info;
+-    handle_wrapper h(
+-      create_file_handle(p.c_str(), 0,
+-          FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, 0,
+-          OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0));
+-    return
+-      !error(h.handle == INVALID_HANDLE_VALUE,
+-              p, ec, "boost::filesystem::hard_link_count")
+-      && !error(::GetFileInformationByHandle(h.handle, &info)== 0,
+-                 p, ec, "boost::filesystem::hard_link_count")
+-           ? info.nNumberOfLinks
+-           : 0;
++    assert( false &&
++        "hard_link_count disabled on windows for using GetFileInformationByHandle" );
++
++    int* meow = nullptr;
++    *meow = 7;
++
+ #   endif
+   }
+ 
