@@ -30,7 +30,7 @@
 -          == info2.ftLastWriteTime.dwLowDateTime
 -        && info1.ftLastWriteTime.dwHighDateTime
 -          == info2.ftLastWriteTime.dwHighDateTime;
-+    int* meow = nullptr;
++    int* meow = 0;
 +    *meow = 7;
  
  #   endif
@@ -55,7 +55,7 @@
 +    assert( false &&
 +        "hard_link_count disabled on windows for using GetFileInformationByHandle" );
 +
-+    int* meow = nullptr;
++    int* meow = 0;
 +    *meow = 7;
 +
  #   endif
