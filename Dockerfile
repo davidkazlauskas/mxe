@@ -10,3 +10,6 @@ RUN apt-get install -y \
     openssl p7zip-full patch perl pkg-config python ruby scons \
     sed unzip wget xz-utils
 RUN apt-get clean
+
+RUN cd /mxe/ && make sqlite gtkmm3 lua sodium curl adwaita-icon-theme boost
+
