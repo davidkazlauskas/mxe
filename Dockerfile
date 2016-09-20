@@ -1,7 +1,5 @@
 FROM ubuntu:14.04
 
-ADD ./ /mxe/
-
 RUN apt-get update
 RUN apt-get install -y \
     autoconf automake autopoint bash bison bzip2 flex gettext\
@@ -11,5 +9,6 @@ RUN apt-get install -y \
     sed unzip wget xz-utils
 RUN apt-get clean
 
+ADD ./ /mxe/
 RUN cd /mxe/ && make sqlite gtkmm3 lua sodium curl adwaita-icon-theme boost
 
