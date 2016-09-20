@@ -1,7 +1,9 @@
 FROM ubuntu:14.04
 
+ADD ./ /mxe/
+
 RUN apt-get update
-RUN apt-get install \
+RUN apt-get install -y \
     autoconf automake autopoint bash bison bzip2 flex gettext\
     git g++ gperf intltool libffi-dev libgdk-pixbuf2.0-dev \
     libtool libltdl-dev libssl-dev libxml-parser-perl make \
