@@ -86,6 +86,9 @@ define $(PKG)_BUILD
     # add sys-include
     cd '$(PREFIX)/$(TARGET)' && rm -f sys-include && ln -s include sys-include
 
+    # make temporary fake stubs
+    mkdir -p $(PREFIX)/$(TARGET)/include/gnu && touch $(PREFIX)/$(TARGET)/include/gnu/stubs.h
+
     # build standalone gcc
     $($(PKG)_CONFIGURE)
     $(MAKE) -C '$(1).build' -j '$(JOBS)' all-gcc
@@ -115,6 +118,7 @@ define $(PKG)_BUILD
     unset LD_LIBRARY_PATH && cd '$(1).corelibs-build' && '$(1)/$(glibc_SUBDIR)/configure' \
         --host='$(basename $(TARGET))' \
         --prefix='$(PREFIX)/$(TARGET)' \
+        --with-headers='$(PREFIX)/$(TARGET)/include' \
         --enable-shared \
         --enable-static \
         CC="$(PREFIX)/bin/$(TARGET)-gcc" \
