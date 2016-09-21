@@ -75,6 +75,7 @@ define $(PKG)_BUILD
     unset LD_LIBRARY_PATH && cd '$(1).headers-build' && '$(1)/$(glibc_SUBDIR)/configure' \
         --host='$(basename $(TARGET))' \
         --prefix='$(PREFIX)/$(TARGET)' \
+        --with-headers='$(PREFIX)/$(TARGET)/include' \
         CC="gcc -m32" \
         CFLAGS="-Wno-error=attributes -O2 -march=i686" \
         libc_cv_forced_unwind=yes
