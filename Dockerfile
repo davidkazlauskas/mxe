@@ -19,7 +19,7 @@ RUN apt-get install -y g++
 RUN apt-get install -y \
     gperf intltool libffi-dev libgdk-pixbuf2.0-dev \
     libltdl-dev libssl-dev libxml-parser-perl \
-    openssl pkg-config python ruby gawk
+    openssl pkg-config python ruby gawk xsltproc
 
 RUN apt-get clean
 
