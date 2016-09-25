@@ -1,4 +1,5 @@
 #!/bin/bash
 
+pushd dockers/mxe-lnx32
 docker build -t safelists_build_env .
 
