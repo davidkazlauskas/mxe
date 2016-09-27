@@ -1,5 +1,10 @@
 #!/bin/bash
 
+pushd dockers/rust-musl-lnx32
+docker build -t intermediate_rust_musl:latest .
+popd
+
 pushd dockers/mxe-lnx32
 docker build -t safelists_build_env .
+popd
 

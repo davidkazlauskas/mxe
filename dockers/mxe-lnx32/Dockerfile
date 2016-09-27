@@ -1,7 +1,7 @@
-FROM ubuntu:14.04
+FROM intermediate_rust_musl:latest
 
-RUN echo 'Acquire::HTTP::Proxy "http://172.17.0.1:3142";' >> /etc/apt/apt.conf.d/01proxy \
-    && echo 'Acquire::HTTPS::Proxy "false";' >> /etc/apt/apt.conf.d/01proxy
+#RUN echo 'Acquire::HTTP::Proxy "http://172.17.0.1:3142";' >> /etc/apt/apt.conf.d/01proxy \
+    #&& echo 'Acquire::HTTPS::Proxy "false";' >> /etc/apt/apt.conf.d/01proxy
 
 RUN apt-get update
 
@@ -24,8 +24,8 @@ RUN apt-get install -y \
 
 RUN apt-get clean
 
-ENV http_proxy 172.17.0.1:3128
-ENV https_proxy 172.17.0.1:3128
+#ENV http_proxy 172.17.0.1:3128
+#ENV https_proxy 172.17.0.1:3128
 
 ADD ./ /mxe/
 RUN cd /mxe/ && make download-gcc
@@ -34,6 +34,6 @@ RUN cd /mxe/ && make binutils
 RUN cd /mxe/ && make gcc
 RUN cd /mxe/ && make sqlite gtkmm3 lua sodium curl adwaita-icon-theme boost
 
-ENV http_proxy ''
-ENV https_proxy ''
+#ENV http_proxy ''
+#ENV https_proxy ''
 
