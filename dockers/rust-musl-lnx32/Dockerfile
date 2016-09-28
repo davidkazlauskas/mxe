@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM safelists_build_env:v1
 
 RUN apt-get update && \
     apt-get install -y \
@@ -10,7 +10,7 @@ RUN apt-get update && \
         sudo \
         xutils-dev \
         && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get clean
 
 # Set up our path with all our binary directories, including those for the
 # musl-gcc toolchain and for our Rust toolchain.
@@ -24,7 +24,7 @@ ENV PATH=/root/.cargo/bin:/usr/local/musl/bin:/usr/local/bin:/usr/bin:/bin
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y && \
     rustup default stable && \
     rustup target add i686-unknown-linux-musl
-ADD cargo-config.toml /root/.cargo/config
+ADD dockers/rust-musl-lnx32/cargo-config.toml /root/.cargo/config
 
 # We'll build our libraries in subdirectories of /root/libs.  Please
 # clean up when you're done.
@@ -55,4 +55,4 @@ ENV OPENSSL_INCLUDE_DIR=/usr/local/musl/include/ \
 
 # Expect our source code to live in /root/src.  We'll run the build as
 # user `rust`, which will be uid 1000, gid 1000 outside the container.
-WORKDIR /root/src
+WORKDIR /
