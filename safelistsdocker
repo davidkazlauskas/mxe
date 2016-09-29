@@ -5,6 +5,6 @@ docker build -t safelists_build_env:v1 -f Dockerfile ../../
 popd
 
 pushd dockers/rust-musl-lnx32
-docker build -t intermediate_rust_musl:latest -f Dockerfile ../../
+docker build -t intermediate_rust_musl:v1 -f Dockerfile ../../
 popd
 
