@@ -31,6 +31,7 @@ RUN cp lib/libunwind.a $PREFIX/lib/
 
 WORKDIR /mxe/tmprust
 RUN git clone https://github.com/rust-lang/rust.git
+# reset to release 1.11
 RUN cd rust && git reset --hard 9b21dcd6a89f38e8ceccb2ede8c9027cb409f6e3
 WORKDIR /mxe/tmprust/rust
 RUN ./configure --default-linker=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
