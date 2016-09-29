@@ -1,0 +1,7 @@
+FROM intermediate_rust_musl:v1
+
+WORKDIR /
+RUN git clone https://github.com/davidkazlauskas/templatious.git
+RUN cd templatious && git reset --hard 5f2489970c87c2169371bae6c0269ffe44ca4ddb
+
+ENV TEMPLATIOUS_DIR /templatious/
