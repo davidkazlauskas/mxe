@@ -8,3 +8,6 @@ pushd dockers/rust-musl-lnx32
 docker build -t intermediate_rust_musl:v1 -f Dockerfile ../../
 popd
 
+pushd dockers/templatious
+docker build -t safelists_templatious:v1 .
+popd
