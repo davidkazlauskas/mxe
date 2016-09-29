@@ -1,3 +1,0 @@
-[build]
-# Target musl-libc by default when running Cargo.
-target = "i686-unknown-linux-musl"
