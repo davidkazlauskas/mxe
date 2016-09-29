@@ -1,5 +1,7 @@
 FROM safelists_build_env:v1
 
+RUN apt-get update && apt-get install -y curl
+
 RUN mkdir -p /mxe/tmprust/musldist
 WORKDIR /mxe/tmprust/musldist
 
@@ -24,14 +26,16 @@ RUN tar xf libunwind-3.7.0.src.tar.xz
 RUN mv libunwind-3.7.0.src libunwind
 RUN mkdir libunwind/build
 WORKDIR /mxe/tmprust/llvm-3.7.0.src/projects/libunwind/build
-RUN cd libunwind/build && cmake -DLLVM_PATH=../../.. -DLIBUNWIND_ENABLE_SHARED=0 .. && make
+RUN cmake -DLLVM_PATH=../../.. -DLIBUNWIND_ENABLE_SHARED=0 .. && make
 RUN cp lib/libunwind.a $PREFIX/lib/
 
 WORKDIR /mxe/tmprust
 RUN git clone https://github.com/rust-lang/rust.git
-RUN git reset --hard 9b21dcd6a89f38e8ceccb2ede8c9027cb409f6e3
+RUN cd rust && git reset --hard 9b21dcd6a89f38e8ceccb2ede8c9027cb409f6e3
 WORKDIR /mxe/tmprust/rust
-RUN ./configure --target=i686-unknown-linux-gnu --musl-root=$PREFIX --prefix=$PREFIX
+RUN ./configure --default-linker=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
+    --default-ar=/mxe/usr/bin/i686-pc-linux-gnu.static-ar \
+    --target=i686-unknown-linux-gnu --musl-root=$PREFIX --prefix=$PREFIX
 RUN make
 RUN make install
 
