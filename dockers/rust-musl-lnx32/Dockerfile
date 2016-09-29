@@ -33,11 +33,12 @@ WORKDIR /mxe/tmprust
 RUN git clone https://github.com/rust-lang/rust.git
 # reset to release 1.11
 RUN cd rust && git reset --hard 9b21dcd6a89f38e8ceccb2ede8c9027cb409f6e3
+RUN cd rust && git submodule update --init --recursive
 WORKDIR /mxe/tmprust/rust
 RUN ./configure --default-linker=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
     --default-ar=/mxe/usr/bin/i686-pc-linux-gnu.static-ar \
-    --target=i686-unknown-linux-gnu --musl-root=$PREFIX --prefix=$PREFIX
-RUN make
+    --target=i686-unknown-linux-musl --musl-root=$PREFIX --prefix=$PREFIX
+RUN make -j 8
 RUN make install
 
 RUN rm -rf tmprust
