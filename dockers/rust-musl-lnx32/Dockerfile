@@ -35,9 +35,10 @@ RUN git clone --progress https://github.com/rust-lang/rust.git
 RUN cd rust && git reset --hard 9b21dcd6a89f38e8ceccb2ede8c9027cb409f6e3
 RUN cd rust && git submodule update --init --recursive
 WORKDIR /mxe/tmprust/rust
-RUN ./configure --default-linker=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
+    CXX=/mxe/usr/bin/i686-pc-linux-gnu.static-g++ \
+    ./configure --default-linker=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
     --build=i686-unknown-linux-musl \
-    --host=x86_64-unknown-linux-gnu \
+    --host=i686-unknown-linux-musl \
     --target=i686-unknown-linux-musl \
     --default-ar=/mxe/usr/bin/i686-pc-linux-gnu.static-ar \
     --musl-root=$PREFIX --prefix=$PREFIX
