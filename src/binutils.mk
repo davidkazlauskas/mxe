@@ -29,7 +29,8 @@ define $(PKG)_BUILD
         --with-gnu-as \
         --disable-nls \
         --disable-shared \
-        --disable-werror
+        --disable-werror \
+        --with-sysroot='$(PREFIX)'
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install
 
