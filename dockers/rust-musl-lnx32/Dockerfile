@@ -35,14 +35,38 @@ RUN git clone --progress https://github.com/rust-lang/rust.git
 RUN cd rust && git reset --hard 9b21dcd6a89f38e8ceccb2ede8c9027cb409f6e3
 RUN cd rust && git submodule update --init --recursive
 WORKDIR /mxe/tmprust/rust
+
+# short hack because rust uses original ld/cc for some reason
+RUN cd /usr/bin && mv cc cc_old && mv ld ld_old
+RUN cd /usr/bin && \
+        ln -s /mxe/usr/bin/i686-pc-linux-gnu.static-ld ld && \
+        ln -s /mxe/usr/bin/i686-pc-linux-gnu.static-gcc cc
+
+RUN CC=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
     CXX=/mxe/usr/bin/i686-pc-linux-gnu.static-g++ \
     ./configure --default-linker=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
-    --build=i686-unknown-linux-musl \
-    --host=i686-unknown-linux-musl \
-    --target=i686-unknown-linux-musl \
+    --build=i686-unknown-linux-gnu \
+    --host=i686-unknown-linux-gnu \
+    --target=i686-unknown-linux-gnu \
     --default-ar=/mxe/usr/bin/i686-pc-linux-gnu.static-ar \
-    --musl-root=$PREFIX --prefix=$PREFIX
+    --libdir=$PREFIX/lib \
+    --prefix=$PREFIX
+
 RUN make
 RUN make install
 
+WORKDIR /mxe/tmprust
+RUN git clone --recursive https://github.com/rust-lang/cargo.git
+
+WORKDIR /mxe/tmprust/cargo
+# release 0.13.0
+RUN git reset --hard 109cb7c33
+RUN ./configure --prefix=$PREFIX \
+    --build=i686-unknown-linux-gnu \
+    --host=i686-unknown-linux-gnu \
+    --target=i686-unknown-linux-musl
+RUN make
+RUN make install
+
+WORKDIR /mxe/
 RUN rm -rf tmprust
