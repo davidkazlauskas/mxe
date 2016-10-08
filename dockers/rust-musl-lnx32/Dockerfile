@@ -9,11 +9,17 @@ RUN wget http://www.musl-libc.org/releases/musl-1.1.10.tar.gz
 RUN tar xvf musl-1.1.10.tar.gz
 
 ENV PREFIX=/mxe/usr/i686-pc-linux-gnu.static
+ENV MUSL_PREFIX=/mxe/usr/i686-unknown-linux-musl
 
-RUN cd musl-1.1.10 \
-   && CC=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc ./configure --target=i686-linux-musl \
-   --disable-shared --prefix=$PREFIX \
-   && make && make install
+RUN mkdir $MUSL_PREFIX
+
+RUN cd musl-1.1.10 && \
+    CC=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc ./configure --target=i686-linux-musl \
+    --disable-shared --prefix=$MUSL_PREFIX
+RUN cd musl-1.1.10 && \
+    CC=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc make && make install
+
+RUN sed -i -e '2iexport REALGCC=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc' $MUSL_PREFIX/bin/musl-gcc
 
 RUN rm -rf /mxe/tmprust/musldist
 
@@ -26,8 +32,9 @@ RUN tar xf libunwind-3.7.0.src.tar.xz
 RUN mv libunwind-3.7.0.src libunwind
 RUN mkdir libunwind/build
 WORKDIR /mxe/tmprust/llvm-3.7.0.src/projects/libunwind/build
-RUN cmake -DLLVM_PATH=../../.. -DLIBUNWIND_ENABLE_SHARED=0 .. && make
-RUN cp lib/libunwind.a $PREFIX/lib/
+RUN cmake -DCMAKE_TOOLCHAIN_FILE=/mxe/usr/i686-pc-linux-gnu.static/share/cmake/mxe-conf.cmake \
+    -DLLVM_PATH=../../.. -DLIBUNWIND_ENABLE_SHARED=0 .. && make
+RUN cp lib/libunwind.a $MUSL_PREFIX/lib/
 
 WORKDIR /mxe/tmprust
 RUN git clone --progress https://github.com/rust-lang/rust.git
@@ -35,36 +42,28 @@ RUN git clone --progress https://github.com/rust-lang/rust.git
 RUN cd rust && git reset --hard 9b21dcd6a89f38e8ceccb2ede8c9027cb409f6e3
 RUN cd rust && git submodule update --init --recursive
 WORKDIR /mxe/tmprust/rust
+# disable c++ check because it fails
 
-# short hack because rust uses original ld/cc for some reason
-RUN cd /usr/bin && mv cc cc_old && mv ld ld_old
-RUN cd /usr/bin && \
-        ln -s /mxe/usr/bin/i686-pc-linux-gnu.static-ld ld && \
-        ln -s /mxe/usr/bin/i686-pc-linux-gnu.static-gcc cc
+RUN ./configure \
+    --build=x86_64-unknown-linux-gnu \
+    --host=x86_64-unknown-linux-gnu \
+    --target=i686-unknown-linux-musl \
+    --musl-root=$MUSL_PREFIX \
+    --prefix=$MUSL_PREFIX
 
-RUN CC=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
-    CXX=/mxe/usr/bin/i686-pc-linux-gnu.static-g++ \
-    ./configure --default-linker=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
-    --build=i686-unknown-linux-gnu \
-    --host=i686-unknown-linux-gnu \
-    --target=i686-unknown-linux-gnu \
-    --default-ar=/mxe/usr/bin/i686-pc-linux-gnu.static-ar \
-    --libdir=$PREFIX/lib \
-    --prefix=$PREFIX
-
-RUN make
+RUN sed -i 's/#include/\/\/#include/g' src/compiler-rt/cmake/config-ix.cmake
+RUN make; exit 0
+RUN CXX=/mxe/usr/bin/i686-pc-linux-gnu.static-g++ make
 RUN make install
 
 WORKDIR /mxe/tmprust
-RUN git clone --recursive https://github.com/rust-lang/cargo.git
+RUN git clone --progress --recursive https://github.com/rust-lang/cargo.git
 
 WORKDIR /mxe/tmprust/cargo
 # release 0.13.0
 RUN git reset --hard 109cb7c33
-RUN ./configure --prefix=$PREFIX \
-    --build=i686-unknown-linux-gnu \
-    --host=i686-unknown-linux-gnu \
-    --target=i686-unknown-linux-musl
+RUN ./configure --prefix=$MUSL_PREFIX \
+    --local-rust-root=$MUSL_PREFIX
 RUN make
 RUN make install
 
