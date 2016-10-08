@@ -12,6 +12,15 @@ WORKDIR /mxe/tmprust
 RUN tar xf /mxe/pkg/rust-1.11.0.tar.gz
 WORKDIR /mxe/tmprust/rust-1.11.0
 
+RUN sed -i 's|CC_i686-unknown-linux-gnu=$(CC)|CC_i686-unknown-linux-gnu=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc|g' \
+        mk/cfg/i686-unknown-linux-gnu.mk
+RUN sed -i 's|CXX_i686-unknown-linux-gnu=$(CXX)|CXX_i686-unknown-linux-gnu=/mxe/usr/bin/i686-pc-linux-gnu.static-g++|g' \
+        mk/cfg/i686-unknown-linux-gnu.mk
+RUN sed -i 's|CPP_i686-unknown-linux-gnu=$(CPP)|CPP_i686-unknown-linux-gnu=/mxe/usr/bin/i686-pc-linux-gnu.static-g++|g' \
+        mk/cfg/i686-unknown-linux-gnu.mk
+RUN sed -i 's|AR_i686-unknown-linux-gnu=$(AR)|AR_i686-unknown-linux-gnu=/mxe/usr/bin/i686-pc-linux-gnu.static-ar|g' \
+        mk/cfg/i686-unknown-linux-gnu.mk
+
 RUN ./configure \
     --build=x86_64-unknown-linux-gnu \
     --host=x86_64-unknown-linux-gnu \
