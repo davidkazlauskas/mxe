@@ -1,0 +1,9 @@
+#!/bin/bash
+
+pushd dockers/mxe-win32
+docker build -t safelists_build_env_w32:v1 -f Dockerfile ../../
+popd
+
+pushd dockers/templatious
+docker build -t safelists_templatious_w32:v1 .
+popd
