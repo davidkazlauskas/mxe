@@ -11,12 +11,12 @@ WORKDIR /mxe/
 RUN cp /mxe/pkg/libsodium-1.0.6.tar.gz /mxe/
 RUN tar xvf libsodium-1.0.6.tar.gz
 WORKDIR /mxe/libsodium-1.0.6
-RUN CC=/mxe/usr/i686-unknown-linux-musl/bin/musl-gcc \
-       ./configure --prefix=/mxe/usr/i686-unknown-linux-musl \
+RUN CC=/mxe/usr/bin/i686-pc-linux-gnu.static-gcc \
+       ./configure --prefix=/mxe/usr/i686-pc-linux-gnu.static \
        --disable-shared \
        --build=x86_64-unknown-linux-gnu \
        --host=x86_64-unknown-linux-gnu \
-       --host=i686-unknown-linux-musl
+       --host=i686-unknown-linux-gnu
 
 RUN make
 RUN make install
