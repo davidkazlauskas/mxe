@@ -11,16 +11,18 @@ WORKDIR /mxe/
 RUN cp /mxe/pkg/libsodium-1.0.6.tar.gz /mxe/
 RUN tar xvf libsodium-1.0.6.tar.gz
 WORKDIR /mxe/libsodium-1.0.6
-RUN CC=/mxe/usr/bin/i686-pc-windows-mingw.static-gcc \
-       ./configure --prefix=/mxe/usr/i686-pc-windows-mingw.static \
+RUN CC=/mxe/usr/bin/i686-w64-mingw32.static-gcc \
+       ./configure --prefix=/mxe/usr/i686-w64-mingw32.static \
        --disable-shared \
        --build=x86_64-unknown-linux-gnu \
-       --host=x86_64-unknown-linux-gnu \
-       --target=i686-pc-windows-mingw
+       --host=i686-w64-mingw32 \
+       --target=i686-w64-mingw32
 
 RUN make
 RUN make install
 
 RUN rm -rf /mxe/libsodium-1.0.6*
+
+ADD safefiledownloader.dll /mxe/usr/i686-w64-mingw32.static/lib
 
 WORKDIR /
